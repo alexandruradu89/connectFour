@@ -1,7 +1,8 @@
  let playerTurn = 0;
  let tableNotCreated = true;
- const matrix = Array.from({length: 6}, () =>
-                new Array(7).fill()); 
+ const boardWidth = 7, boardHight = 6;
+ const matrix = Array.from({length: boardHight}, () =>
+                new Array(boardWidth).fill()); 
 
  function createTable() {
     resetWinnerMessage();
@@ -16,10 +17,11 @@
                 const cell = document.createElement("td");
                 cell.id = i + "-" + j;
                 const cellText = document.createTextNode("");
+                //cell.classList.add("cell");
                 cell.appendChild(cellText);
-                cell.setAttribute("style", "border: 1px solid black; width: 50px; height: 50px");
+                cell.setAttribute("style", "border: 1px solid black; width: 15%; height: 15%");
                 row.appendChild(cell);
-                cell.addEventListener("click", () =>setValue(cell));
+                cell.addEventListener("click", () => setValue(cell));
             }
             tableBody.appendChild(row);
         }
@@ -80,14 +82,11 @@
 
  function checkIfWon(symbol) {
     for (let i = 0; i < 6; ++i) {
-        consecutiveSymbols = 0;
-        for (let j = 0; j < 6; ++j) {
-            if (symbol === matrix[i][j] && symbol === matrix[i][j + 1]) {
-                ++consecutiveSymbols;
-            } else {
-                consecutiveSymbols = 0;
-            }
-            if (consecutiveSymbols === 3) {
+        for (let j = 0; j < 4; ++j) {
+            if (symbol === matrix[i][j] &&
+                symbol === matrix[i][j + 1] &&
+                symbol === matrix[i][j + 2] &&
+                symbol === matrix[i][j + 3] ) {
                 return true;
             }
         }
@@ -95,13 +94,11 @@
 
     for (let j = 0; j < 7; ++j) {
         consecutiveSymbols = 0;
-        for (let i = 0; i < 5; ++i) {
-            if (symbol === matrix[i][j] && symbol === matrix[i + 1][j]) {
-                ++consecutiveSymbols;
-            } else {
-                consecutiveSymbols = 0;
-            }
-            if (consecutiveSymbols === 3) {
+        for (let i = 0; i < 3; ++i) {
+            if (symbol === matrix[i][j] &&
+                symbol === matrix[i + 1][j] &&
+                symbol === matrix[i + 2][j] &&
+                symbol === matrix[i + 3][j] ) {
                 return true;
             }
         }
@@ -129,7 +126,7 @@
         }
     }
 
-    if (playerTurn === 42) {
+    if (playerTurn === (boardHight * boardWidth)) {
         const message = document.getElementById("winnerMessage");
         message.innerHTML = "It's a tie!";
     }
