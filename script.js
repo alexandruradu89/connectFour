@@ -11,9 +11,9 @@
         const displayTable = document.createElement("table");
         const tableBody = document.createElement("tbody");
     
-        for (let i = 0; i < 6; ++i) {
+        for (let i = 0; i < boardHight; ++i) {
             const row = document.createElement("tr");
-            for (let j = 0; j < 7; ++j) {
+            for (let j = 0; j < boardWidth; ++j) {
                 const cell = document.createElement("td");
                 cell.id = i + "-" + j;
                 const cellText = document.createTextNode("");
@@ -35,8 +35,8 @@
 
  function resetTable() {
     playerTurn = 0;
-    for (let i  = 0; i < 6; ++i) {
-        for (let j = 0; j < 7; ++j) {
+    for (let i  = 0; i < boardHight; ++i) {
+        for (let j = 0; j < boardWidth; ++j) {
             matrix[i][j] = "";
             let cellId = i + "-" + j;
             let currentCell = document.getElementById(cellId);
@@ -81,7 +81,7 @@
  }
 
  function checkIfWon(symbol) {
-    for (let i = 0; i < 6; ++i) {
+    for (let i = 0; i < boardHight; ++i) {
         for (let j = 0; j < 4; ++j) {
             if (symbol === matrix[i][j] &&
                 symbol === matrix[i][j + 1] &&
@@ -92,7 +92,7 @@
         }
     }
 
-    for (let j = 0; j < 7; ++j) {
+    for (let j = 0; j < boardWidth; ++j) {
         consecutiveSymbols = 0;
         for (let i = 0; i < 3; ++i) {
             if (symbol === matrix[i][j] &&
@@ -115,7 +115,7 @@
         }
     }
 
-    for (let i = 3; i < 6; ++i) {
+    for (let i = 3; i < boardHight; ++i) {
         for (let j = 0; j < 4; ++j) {
             if (symbol === matrix[i][j] &&
                 symbol === matrix[i - 1][j + 1] &&
